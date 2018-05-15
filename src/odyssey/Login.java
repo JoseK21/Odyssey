@@ -1,19 +1,41 @@
 package odyssey;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author josek
  */
-public class Login extends javax.swing.JFrame {
-   
+public final class Login extends javax.swing.JFrame {
+    
+    Socket loginCliente;
+    int puerto = 8888;
+    String ip = "172.17.70.138";
+    BufferedReader entrada;
+    PrintStream salida;
+    
+            
     /**
      * Creates new form Interface
+     * @throws java.io.IOException
      */
-    public Login() {
-        initComponents();
-        
+    public Login() throws IOException {     
+        initComponents();  
+        try{            
+            loginCliente = new Socket(ip,puerto);
+            System.out.println("Server Connected :)");   
+        }catch(IOException e){
+            System.out.println("Server Disconnected :( ");            
+        }                     
     }
-
-    /**
+    
+     /**
      * This method is called from within the constructor to initialize the form.     
      */
     @SuppressWarnings("unchecked")
@@ -103,7 +125,33 @@ public class Login extends javax.swing.JFrame {
         String userName = UserName.getText();
         String password = String.valueOf(Password.getPassword());      
         
-        System.out.print("User Name: "+userName + "\nPassword : " + password + "\n");
+        System.out.print("User Name: "+userName + "\nPassword : " + password + "\n");        
+        try{
+            entrada = new BufferedReader
+                        (new InputStreamReader(loginCliente.getInputStream()));
+            System.out.println("DESPUES DEL ENTRADA");
+            
+            String tec = UserName.getText();
+            salida = new PrintStream(loginCliente.getOutputStream());            
+            salida.println(tec);        //Envio información al servidor
+            
+            System.out.println("1a");
+            
+            String msj = entrada.readLine();
+            
+            System.out.println("2a");
+            
+            System.out.println(msj);
+            
+            System.out.println("3a");
+            
+            entrada.close();
+            salida.close();
+            //loginCliente.close();   
+            
+        }catch(IOException e){
+            System.out.println("odyssey.Login.inicio()");
+        }
         
         
     }//GEN-LAST:event_LoginActionPerformed
@@ -113,6 +161,7 @@ public class Login extends javax.swing.JFrame {
      */
     private void SingInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SingInActionPerformed
         // TODO add your handling code here:
+      
     }//GEN-LAST:event_SingInActionPerformed
 
     /**
@@ -145,7 +194,11 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                try {
+                    new Login().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
