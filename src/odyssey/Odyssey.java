@@ -16,8 +16,12 @@ public class Odyssey {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        Login log = new Login();
-        log.setVisible(true);
+        //Login log = new Login();
+        //log.setVisible(true);
+        
+        
+        Interface inf = new Interface();
+        inf.setVisible(true);
     }
     
 }

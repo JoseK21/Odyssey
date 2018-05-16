@@ -29,9 +29,10 @@ public final class Login extends javax.swing.JFrame {
         initComponents();  
         try{            
             loginCliente = new Socket(ip,puerto);
-            System.out.println("Server Connected :)");   
-        }catch(IOException e){
-            System.out.println("Server Disconnected :( ");            
+            System.out.println("Server Connected :)");        
+            
+            }catch(IOException e){
+              System.out.println("Server Disconnected :( ");            
         }                     
     }
     
