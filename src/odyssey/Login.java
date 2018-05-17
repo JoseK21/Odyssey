@@ -16,7 +16,7 @@ public final class Login extends javax.swing.JFrame {
     
     Socket loginCliente;
     int puerto = 8888;
-    String ip = "172.17.70.138";
+    String ip = "172.18.64.35";
     BufferedReader entrada;
     PrintStream salida;
     
@@ -128,9 +128,7 @@ public final class Login extends javax.swing.JFrame {
         
         System.out.print("User Name: "+userName + "\nPassword : " + password + "\n");        
         try{
-            entrada = new BufferedReader
-                        (new InputStreamReader(loginCliente.getInputStream()));
-            System.out.println("DESPUES DEL ENTRADA");
+            entrada = new BufferedReader(new InputStreamReader(loginCliente.getInputStream()));
             
             String tec = UserName.getText();
             salida = new PrintStream(loginCliente.getOutputStream());            
@@ -138,17 +136,13 @@ public final class Login extends javax.swing.JFrame {
             
             System.out.println("1a");
             
-            String msj = entrada.readLine();
-            
-            System.out.println("2a");
-            
-            System.out.println(msj);
-            
-            System.out.println("3a");
+            String msj = entrada.readLine();          
+                                 
+            System.out.println("Server> "+msj);     
             
             entrada.close();
             salida.close();
-            //loginCliente.close();   
+          //  loginCliente.close(); 
             
         }catch(IOException e){
             System.out.println("odyssey.Login.inicio()");
