@@ -1,13 +1,41 @@
 package odyssey;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.io.StringReader;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.Document;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 
 
 
@@ -20,18 +48,17 @@ public final class Login extends javax.swing.JFrame {
     int puerto = 8888;
     String ip = "172.18.64.35";
     BufferedReader entrada;
-    PrintStream salida;
-    
-            
+    PrintStream salida;            
     /**
      * Creates new form Interface
      * @throws java.io.IOException
      */
     public Login() throws IOException {     
-        initComponents();  
+        initComponents();
+               
         try{            
             loginCliente = new Socket(ip,puerto);
-            System.out.println("Server Connected :)");   
+            System.out.println("Server Connected <Login>");   
             entrada = new BufferedReader(new InputStreamReader(loginCliente.getInputStream()));               
             salida = new PrintStream(loginCliente.getOutputStream());  
             
@@ -139,21 +166,35 @@ public final class Login extends javax.swing.JFrame {
     private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:
         String userName = UserName.getText();
-        String password = String.valueOf(Password.getPassword());      
+        String password = String.valueOf(Password.getPassword());  
+        String acces = "no";        
+        System.out.print("User Name: "+userName + "\nPassword : " + password + "\n");  
         
-        System.out.print("User Name: "+userName + "\nPassword : " + password + "\n");        
-        try{
-                            
-            salida.println(userName);        //Envio información al servidor
-                        
-            String msj = entrada.readLine();          
-                                 
-            System.out.println("Server> "+msj);     
+        try{              
             
-          
+            String xmlClient = "<client><username>"+userName+"</username><password>"+password+"</password><acces>"+acces+"</acces></client>";
+            salida.println(xmlClient);        //Envio información al servidor       
             
+            String msj = entrada.readLine();        //recibe datos del server
+            
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            InputSource src = new InputSource();
+            src.setCharacterStream(new StringReader(msj));
+            org.w3c.dom.Document doc = builder.parse(src);
+            
+            String userN = doc.getElementsByTagName("username").item(0).getTextContent();
+            String passW = doc.getElementsByTagName("password").item(0).getTextContent();  
+            String acceS = doc.getElementsByTagName("acces").item(0).getTextContent();  
+            
+            System.out.println("Username>>>> "+userN);  
+            System.out.println("Password>>>>>"+passW);  
+            System.out.println("Acces >>>>>"+acceS);  
+            
+                       
         }catch(IOException e){
             System.out.println("odyssey.Login.inicio()");
+        } catch (SAXException | ParserConfigurationException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -164,25 +205,85 @@ public final class Login extends javax.swing.JFrame {
      */
     private void SingInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SingInActionPerformed
         // TODO add your handling code here:
+        SingIn sigIn;
+        sigIn = new SingIn();
+        sigIn.setVisible(true);
+        
       
     }//GEN-LAST:event_SingInActionPerformed
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
-        
-        super.dispose();    
-        /*
-        try {
-            // TODO add your handling code here:
-            entrada.close();
-            salida.close();
-            loginCliente.close(); 
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
+        //super.dispose();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("C:\\home\\josek\\Descargas"));///home/josek/Descargas
+        fileChooser.setDialogTitle("Select Mp3");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Mp3 files","mp3"));
+        if(fileChooser.showOpenDialog(Exit)==JFileChooser.APPROVE_OPTION){
+            try {                
+                File myFile = fileChooser.getSelectedFile();
+                String filename = fileChooser.getSelectedFile().getName();
+                String filePath = fileChooser.getSelectedFile().getPath();
+                
+                System.out.println(filename);
+                System.out.println(filePath);
+                //try {
+                String absolutePath = myFile.getAbsolutePath();
+                String filePath1 = absolutePath.substring(0,absolutePath.lastIndexOf(File.separator));
+                System.out.println(filePath1);
+                // convert file to byte[]
+                byte[] bFile = readBytesFromFile(filePath1+filePath);
+                
+                // save byte[] into a file
+                Path path = Paths.get("C:\\home\\josek\\test2.txt");
+                Files.write(path, bFile);
+                
+                System.out.println("Done");
+                
+                //Print bytes[]
+                for (int i = 0; i < bFile.length; i++) {
+                    System.out.print((char) bFile[i]);
+                }
+                
+                //} catch (IOException e) {
+                //    e.printStackTrace();
+                //}
+            } catch (IOException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }        
     }//GEN-LAST:event_ExitActionPerformed
 
-    
+    private static byte[] readBytesFromFile(String filePath) {
+
+        FileInputStream fileInputStream = null;
+        byte[] bytesArray = null;
+
+        try {
+
+            File file = new File(filePath);
+            bytesArray = new byte[(int) file.length()];
+
+            //read file into bytes[]
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bytesArray);
+
+        } catch (IOException e) {
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                }
+            }
+
+        }
+
+        return bytesArray;
+
+    }
+
        
     /**
      * @param args the command line arguments
