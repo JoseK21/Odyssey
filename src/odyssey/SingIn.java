@@ -56,7 +56,6 @@ public class SingIn extends javax.swing.JFrame {
 
     /**
      * Creates new form SingIn
-     * @throws java.io.IOException
      */
     public SingIn(){
         initComponents();
