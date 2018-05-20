@@ -369,15 +369,42 @@ public class SingIn extends javax.swing.JFrame {
            
                 addFried();  String friends = FRIEND_ADD;   createJSON(userName, fullName, ageUser,genre,password,friends);
                                                                                                                          //userName-fullName-age-genre-friends-password
-String xmltoServer ="<client><username>"+myJSON.getString("userName")+"</username><fullname>"+myJSON.getString("fullName")+"</fullname><age>"+myJSON.getString("age")+"</age><genre>"+myJSON.getJSONArray("genre").toString()+"</genre><password>"+myJSON.getString("password")+"</password><friend>"+myJSON.getJSONArray("friends").toString()+"</friend></client>";
-                
-                    System.out.println("~: : : :>"+ xmltoServer);
+//String xmltoServer ="<client><username>"+myJSON.getString("userName")+"</username><fullname>"+myJSON.getString("fullName")+"</fullname><age>"+myJSON.getString("age")+"</age><genre>"+myJSON.getJSONArray("genre").toString()+"</genre><password>"+myJSON.getString("password")+"</password><friend>"+myJSON.getJSONArray("friends").toString()+"</friend></client>";
+
+
+//QString input("<username key=\"Josek21\"><fullname key=\"Jose Carlos Nunez Valver\"><password key=\"1234JKTec\">");
+    // QString input("<username key=\""+a1+"\"><fullname key=\""+a2+"\"><password key=\""+a3+"\">");
+
+    
+    String u = myJSON.getString("userName");
+    String fn = myJSON.getString("fullName");
+    String a = myJSON.getString("age");
+    String g = myJSON.getJSONArray("genre").toString();
+    g="SINGENEROS";
+    String p = myJSON.getString("password");
+    String f = myJSON.getJSONArray("friends").toString();
+    f="SINAMIGOS";
+    
+    
+    
+    String xml3 = 
+        ("<username key=\""+u+"\"><fullname key=\""+fn+"\"><age key=\""+a+"\"><genre key=\""+g+"\"><password key=\""+p+"\"><friends key=\""+f+"\">"); 
+
+//System.out.println("~: : : :>"+ xmltoServer+"\n~: : : :>"+xml3);
+                    System.err.println(xml3);
                
                     try{
                     
                     String xmlClient =myJSON.toString();
-                    salida.println(xmlClient);        //Envio información al servidor
+                    salida.println(xml3);        //Envio información al servidor
                     String msj = entrada.readLine();        //recibe datos del server
+                    
+                        System.err.println(":"+msj);
+                        
+                        
+                        if(msj.equals("SI")){
+                                        JOptionPane.showMessageDialog(this, "YESSSS","PASS_TO_Interface",2);
+                        }
                     /*
                     
                     DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
