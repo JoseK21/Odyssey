@@ -9,8 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
@@ -85,11 +87,6 @@ public class Interface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         listMusic.setViewportView(jList1);
 
         addMusic.setText("Add Music");
@@ -186,11 +183,6 @@ public class Interface extends javax.swing.JFrame {
 
         friends.setText("Freinds________________________________");
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         listFriends.setViewportView(jList2);
 
         addFriend.setText("Add Friend");
@@ -458,18 +450,26 @@ public class Interface extends javax.swing.JFrame {
 
     private void sortNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortNameActionPerformed
         // TODO add your handling code here:
+                    JOptionPane.showMessageDialog(this, "Sort by Name","Odyssey",2);
+
     }//GEN-LAST:event_sortNameActionPerformed
 
     private void sortAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortAuthorActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Sort by Author","Odyssey",2);
     }//GEN-LAST:event_sortAuthorActionPerformed
 
     private void sortAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortAlbumActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Sort by Album","Odyssey",2);
     }//GEN-LAST:event_sortAlbumActionPerformed
 
     private void addMusicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMusicActionPerformed
         // TODO add your handling code here:
+        DefaultListModel din = new DefaultListModel();
+
+        
+        
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("C:\\home\\josek\\Descargas"));///home/josek/Descargas
         fileChooser.setDialogTitle("Select Mp3");
@@ -482,6 +482,9 @@ public class Interface extends javax.swing.JFrame {
                 String filePath = fileChooser.getSelectedFile().getPath();
                 
                 System.out.println(filename);
+                din.addElement(filename);
+                jList1.setModel(din);
+                
                 System.out.println(filePath);
                 //try {
                 String absolutePath = myFile.getAbsolutePath();
