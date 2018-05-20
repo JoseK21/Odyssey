@@ -380,17 +380,15 @@ public class SingIn extends javax.swing.JFrame {
     String fn = myJSON.getString("fullName");
     String a = myJSON.getString("age");
     String g = myJSON.getJSONArray("genre").toString();
-    g="SINGENEROS";
+    g=genre;
     String p = myJSON.getString("password");
     String f = myJSON.getJSONArray("friends").toString();
-    f="SINAMIGOS";
+    f=FRIEND_ADD;
     
     
     
-    String xml3 = 
-        ("<username key=\""+u+"\"><fullname key=\""+fn+"\"><age key=\""+a+"\"><genre key=\""+g+"\"><password key=\""+p+"\"><friends key=\""+f+"\">"); 
+    String xml3 = ("<username key=\""+u+"\"><fullname key=\""+fn+"\"><age key=\""+a+"\"><genre key=\""+g+"\"><password key=\""+p+"\"><friends key=\""+f+"\">"); 
 
-//System.out.println("~: : : :>"+ xmltoServer+"\n~: : : :>"+xml3);
                     System.err.println(xml3);
                
                     try{
@@ -403,7 +401,7 @@ public class SingIn extends javax.swing.JFrame {
                         
                         
                         if(msj.equals("SI")){
-                                        JOptionPane.showMessageDialog(this, "YESSSS","PASS_TO_Interface",2);
+                            JOptionPane.showMessageDialog(this, "User Created _ Welcome to Odyssey","Sing in",3);
                         }
                     /*
                     
@@ -434,7 +432,7 @@ public class SingIn extends javax.swing.JFrame {
         // TODO add your handling code here:
        String f = jTextField6.getText();
         
-        FRIEND_ADD += (f+"-");
+        FRIEND_ADD += (f+" ");
         System.out.println(":" + FRIEND_ADD);
         
     }//GEN-LAST:event_addFriendActionPerformed
