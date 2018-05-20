@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
@@ -32,7 +33,7 @@ public final class Login extends javax.swing.JFrame {
     
     Socket loginCliente;
     int puerto = 8888;
-    String ip = "172.18.64.35";
+    String ip = "192.168.0.109";
     BufferedReader entrada;
     PrintStream salida;            
     /**
@@ -154,17 +155,19 @@ public final class Login extends javax.swing.JFrame {
         String userName = UserName.getText();
         String password = String.valueOf(Password.getPassword());  
         String acces = "no";        
-        System.out.print("User Name: "+userName + "\nPassword : " + password + "\n");  
+        //System.out.print("User Name: "+userName + "\nPassword : " + password + "\n");  
         
-        try{              
-            
+        try{  
             String xmlClient = "<client><username>"+userName+"</username><password>"+password+"</password><acces>"+acces+"</acces></client>";
             salida.println(xmlClient);        //Envio información al servidor       
             
             String msj = entrada.readLine();        //recibe datos del server
-            
+                        
+            System.out.println("->"+msj);
+            /*
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             InputSource src = new InputSource();
+            
             src.setCharacterStream(new StringReader(msj));
             org.w3c.dom.Document doc = builder.parse(src);
             
@@ -175,13 +178,19 @@ public final class Login extends javax.swing.JFrame {
             System.out.println("Username>>>> "+userN);  
             System.out.println("Password>>>>>"+passW);  
             System.out.println("Acces >>>>>"+acceS);  
+            */
+            /*
+            JOptionPane.showMessageDialog(this, userN,"Evaluate",2);
             
+            Interface i = new Interface();
+            i.setVisible(true);
+            */
                        
         }catch(IOException e){
             System.out.println("odyssey.Login.inicio()");
-        } catch (SAXException | ParserConfigurationException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
+        
+        
         
         
     }//GEN-LAST:event_LoginActionPerformed

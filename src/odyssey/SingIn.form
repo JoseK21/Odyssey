@@ -48,51 +48,55 @@
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="hiphop" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="rockroll" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="balada" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="rock" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="hiphop" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rockroll" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="balada" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rock" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="reggae" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rap" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="banda" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="pop" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="electro" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="bachata" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="trashmetal" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dance" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="salsa" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jazz" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ska" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="punk" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                              <Component id="age" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                              <Component id="passWord1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                              <Component id="fullName" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                              <Component id="userName" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="reggae" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="rap" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="banda" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="pop" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="electro" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="bachata" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="trashmetal" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="dance" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="salsa" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jazz" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="ska" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="punk" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                      <Component id="age" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                      <Component id="passWord1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                      <Component id="fullName" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                      <Component id="userName" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>

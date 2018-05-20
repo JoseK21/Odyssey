@@ -16,6 +16,7 @@ import java.io.StringReader;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,7 +42,7 @@ public class SingIn extends javax.swing.JFrame {
     
     Socket SingInCliente;
     int puerto = 8888;
-    String ip = "172.18.64.35";
+    String ip = "192.168.0.109";
     BufferedReader entrada;
     PrintStream salida;  
     
@@ -59,18 +60,16 @@ public class SingIn extends javax.swing.JFrame {
      */
     public SingIn(){
         initComponents();
-        setDefaultCloseOperation(Metadata.DISPOSE_ON_CLOSE);
         try{            
             SingInCliente = new Socket(ip,puerto);
             entrada = new BufferedReader(new InputStreamReader(SingInCliente.getInputStream()));               
-            salida = new PrintStream(SingInCliente.getOutputStream());   
-            
-        
+            salida = new PrintStream(SingInCliente.getOutputStream());           
             System.out.println("Server Connected <SingIn>");   
             
         }catch(IOException e){
           System.out.println("Server Disconnected ");            
         }    
+        
     }
 
     /**
@@ -333,8 +332,7 @@ public class SingIn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        
+     setDefaultCloseOperation(Metadata.DISPOSE_ON_CLOSE);
         super.dispose(); 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -346,55 +344,63 @@ public class SingIn extends javax.swing.JFrame {
             String ageUser = this.jTextField3.getText();
             String password = this.jTextField4.getText();
             String friend = this.jTextField6.getText();
-            genre="";
-        if(rock.isSelected()){              genre+="rock ";        }
-        if(hiphop.isSelected()){            genre+="hiphop ";      }
-        if(rockroll.isSelected()){          genre+="rockroll ";    }
-        if(balada.isSelected()){            genre+="balada ";      }
-        if(pop.isSelected()){               genre+="pop ";         }
-        if(reggae.isSelected()){            genre+="reggae ";      }
-        if(rap.isSelected()){              genre+="rap ";        }
-        if(banda.isSelected()){             genre+="banda ";       }
-        if(electro.isSelected()){           genre+="electro ";     }   
-        if(bachata.isSelected()){           genre+="bachata ";     }
-        if(trashmetal.isSelected()){        genre+="trashmetal ";  }
-        if(dance.isSelected()){             genre+="dance ";       }
-        if(salsa.isSelected()){             genre+="salsa ";       }   
-        if(ska.isSelected()){               genre+="ska ";         }
-        if(jazz.isSelected()){              genre+="jazz ";        }
-        if(punk.isSelected()){              genre+="punk ";        }
+            
+            if(userName.trim().isEmpty()|| fullName.trim().isEmpty()||ageUser.trim().isEmpty()||password.trim().isEmpty()){
+                //mensaje de error
+                JOptionPane.showMessageDialog(this, "Error: Empty Fields : ","Sing In",1);
+            }else{                  
+                genre="";
+                if(rock.isSelected()){              genre+="rock ";        }
+                if(hiphop.isSelected()){            genre+="hiphop ";      }
+                if(rockroll.isSelected()){          genre+="rockroll ";    }
+                if(balada.isSelected()){            genre+="balada ";      }
+                if(pop.isSelected()){               genre+="pop ";         }
+                if(reggae.isSelected()){            genre+="reggae ";      }
+                if(rap.isSelected()){              genre+="rap ";        }
+                if(banda.isSelected()){             genre+="banda ";       }
+                if(electro.isSelected()){           genre+="electro ";     }   
+                if(bachata.isSelected()){           genre+="bachata ";     }
+                if(trashmetal.isSelected()){        genre+="trashmetal ";  }
+                if(dance.isSelected()){             genre+="dance ";       }
+                if(salsa.isSelected()){             genre+="salsa ";       }   
+                if(ska.isSelected()){               genre+="ska ";         }
+                if(jazz.isSelected()){              genre+="jazz ";        }
+                if(punk.isSelected()){              genre+="punk ";        }
            
-        addFried();
-        String friends = FRIEND_ADD;
+                addFried();  String friends = FRIEND_ADD;   createJSON(userName, fullName, ageUser,genre,password,friends);
+                                                                                                                         //userName-fullName-age-genre-friends-password
+String xmltoServer ="<client><username>"+myJSON.getString("userName")+"</username><fullname>"+myJSON.getString("fullName")+"</fullname><age>"+myJSON.getString("age")+"</age><genre>"+myJSON.getJSONArray("genre").toString()+"</genre><password>"+myJSON.getString("password")+"</password><friend>"+myJSON.getJSONArray("friends").toString()+"</friend></client>";
+                
+                    System.out.println("~: : : :>"+ xmltoServer);
+               
+                    try{
+                    
+                    String xmlClient =myJSON.toString();
+                    salida.println(xmlClient);        //Envio información al servidor
+                    String msj = entrada.readLine();        //recibe datos del server
+                    /*
+                    
+                    DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                    InputSource src = new InputSource();
+                    src.setCharacterStream(new StringReader(msj));
+                    org.w3c.dom.Document doc = builder.parse(src);
+                    String age = doc.getElementsByTagName("username").item(0).getTextContent();
+                    String name = doc.getElementsByTagName("password").item(0).getTextContent();
+                    System.out.println("username>>>> "+age);
+                    System.out.println("password>>>>>"+name);
+                    */
+
+                }catch(IOException e){
+                    System.out.println("odyssey.Login.inicio() eRROR");
+                } /*catch (SAXException | ParserConfigurationException ex) {
+                    Logger.getLogger(SingIn.class.getName()).log(Level.SEVERE, null, ex);
+                } */
+            }
+                    
+        }catch(JSONException | IOException ex){
+            Logger.getLogger(SingIn.class.getName()).log(Level.SEVERE, null, ex);       
+        }      
         
-            createJSON(userName, fullName, ageUser,genre,password,friends);
-            
-            
-            try{
-                String xmlClient = myJSON.toString();
-                salida.println(xmlClient);        //Envio información al servidor
-                
-                String msj = entrada.readLine();        //recibe datos del server
-                
-                /*
-                DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                InputSource src = new InputSource();
-                src.setCharacterStream(new StringReader(msj));
-                org.w3c.dom.Document doc = builder.parse(src);
-                String age = doc.getElementsByTagName("username").item(0).getTextContent();
-                String name = doc.getElementsByTagName("password").item(0).getTextContent();
-                System.out.println("username>>>> "+age);
-                System.out.println("password>>>>>"+name);
-                */
-                
-            }catch(IOException e){
-                System.out.println("odyssey.Login.inicio()");
-            } 
-        }catch(JSONException ex){
-            Logger.getLogger(SingIn.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(SingIn.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_buttonCreateActionPerformed
 
     private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
@@ -445,37 +451,14 @@ public class SingIn extends javax.swing.JFrame {
     
     public static void createJSON(String userName ,String fullName ,String ageUser ,String listGenre,String password ,String friends ) throws JSONException, IOException {
          
-        myJSON.put("UserNAme", userName);
-        myJSON.put("Full Name:", fullName);
-        myJSON.put("Age", ageUser);
-        //FRIEND_ADD
+        myJSON.put("userName", userName);       
+        myJSON.put("fullName", fullName);
+        myJSON.put("age", ageUser);        
+        addGenre(listGenre);       addFried();                
+        myJSON.put("genre", list);
+        myJSON.put("friends", listF);        
+        myJSON.put("password", password);   
         
-        addGenre(listGenre);
-        addFried();
-                
-        myJSON.put("Genre", list);
-        myJSON.put("Friends", listF);        
-        myJSON.put("Password", password);   
-        
-        
-        
-        System.out.println(myJSON);
-        try { 
-            fileJSON = new FileWriter("myJson.json");    
-            
-            fileJSON.write(myJSON.toString());
-            fileJSON.flush();        
-        
-        }
-        catch(IOException e){
-            
-        }
-        BufferedWriter br = new BufferedWriter(fileJSON);
-        
-        
-        br.write("helllllllllllllllll");
-        br.close();
-       // fr.close();
     }
     
     public static void addGenre(String listMyGenre) {
@@ -484,7 +467,6 @@ public class SingIn extends javax.swing.JFrame {
         list= new JSONArray();
         for(int i = 0;i< array.length ;i++){            
             list.put(array[i]);
-            System.out.println(":> Genre"+ array[i]);
         }
         
     }
@@ -495,7 +477,7 @@ public class SingIn extends javax.swing.JFrame {
         listF= new JSONArray();
         for(int i = 0;i< array.length ;i++){            
             listF.put(array[i]);
-            System.out.println(":> Friend_"+i+" :"+ array[i]);
+            
         }
         
     }
