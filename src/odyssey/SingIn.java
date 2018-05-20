@@ -368,14 +368,7 @@ public class SingIn extends javax.swing.JFrame {
                 if(punk.isSelected()){              genre+="punk ";        }
            
                 addFried();  String friends = FRIEND_ADD;   createJSON(userName, fullName, ageUser,genre,password,friends);
-                                                                                                                         //userName-fullName-age-genre-friends-password
-//String xmltoServer ="<client><username>"+myJSON.getString("userName")+"</username><fullname>"+myJSON.getString("fullName")+"</fullname><age>"+myJSON.getString("age")+"</age><genre>"+myJSON.getJSONArray("genre").toString()+"</genre><password>"+myJSON.getString("password")+"</password><friend>"+myJSON.getJSONArray("friends").toString()+"</friend></client>";
 
-
-//QString input("<username key=\"Josek21\"><fullname key=\"Jose Carlos Nunez Valver\"><password key=\"1234JKTec\">");
-    // QString input("<username key=\""+a1+"\"><fullname key=\""+a2+"\"><password key=\""+a3+"\">");
-
-    
     String u = myJSON.getString("userName");
     String fn = myJSON.getString("fullName");
     String a = myJSON.getString("age");
@@ -417,9 +410,7 @@ public class SingIn extends javax.swing.JFrame {
 
                 }catch(IOException e){
                     System.out.println("odyssey.Login.inicio() eRROR");
-                } /*catch (SAXException | ParserConfigurationException ex) {
-                    Logger.getLogger(SingIn.class.getName()).log(Level.SEVERE, null, ex);
-                } */
+                } 
             }
                     
         }catch(JSONException | IOException ex){

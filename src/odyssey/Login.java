@@ -164,7 +164,7 @@ public final class Login extends javax.swing.JFrame {
             String msj = entrada.readLine();        //recibe datos del server
                         
             System.out.println("->"+msj);
-            /*
+            
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             InputSource src = new InputSource();
             
@@ -178,16 +178,20 @@ public final class Login extends javax.swing.JFrame {
             System.out.println("Username>>>> "+userN);  
             System.out.println("Password>>>>>"+passW);  
             System.out.println("Acces >>>>>"+acceS);  
-            */
-            /*
-            JOptionPane.showMessageDialog(this, userN,"Evaluate",2);
+            
+            
+            //JOptionPane.showMessageDialog(this, userN,"Evaluate",2);
             
             Interface i = new Interface();
             i.setVisible(true);
-            */
+            
                        
         }catch(IOException e){
             System.out.println("odyssey.Login.inicio()");
+        } catch (SAXException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } 
         
         
