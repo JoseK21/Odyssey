@@ -1,7 +1,18 @@
 package odyssey;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 
 /**
  *
@@ -459,6 +470,42 @@ public class Interface extends javax.swing.JFrame {
 
     private void addMusicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMusicActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("C:\\home\\josek\\Descargas"));///home/josek/Descargas
+        fileChooser.setDialogTitle("Select Mp3");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Mp3 files","mp3"));
+        if(fileChooser.showOpenDialog(addMusic)==JFileChooser.APPROVE_OPTION){
+            try {                
+                File myFile = fileChooser.getSelectedFile();
+                String filename = fileChooser.getSelectedFile().getName();
+                String filePath = fileChooser.getSelectedFile().getPath();
+                
+                System.out.println(filename);
+                System.out.println(filePath);
+                //try {
+                String absolutePath = myFile.getAbsolutePath();
+                String filePath1 = absolutePath.substring(0,absolutePath.lastIndexOf(File.separator));
+                System.out.println(filePath1);
+                // convert file to byte[]
+                byte[] bFile = readBytesFromFile(filePath1+filePath);
+                
+                // save byte[] into a file
+                Path path = Paths.get("C:\\home\\josek\\test2.txt");
+                Files.write(path, bFile);
+                
+                System.out.println("Done");
+                
+                //Print bytes[]
+                for (int i = 0; i < bFile.length; i++) {
+                    System.out.print((char) bFile[i]);
+                }
+                
+            } catch (IOException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }  
     }//GEN-LAST:event_addMusicActionPerformed
 
     private void deleteMusicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMusicActionPerformed
@@ -477,8 +524,37 @@ public class Interface extends javax.swing.JFrame {
 
     private void addFriendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_addFriendActionPerformed
 
+    
+    private static byte[] readBytesFromFile(String filePath) {
+
+        FileInputStream fileInputStream = null;
+        byte[] bytesArray = null;
+
+        try {
+
+            File file = new File(filePath);
+            bytesArray = new byte[(int) file.length()];
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bytesArray);
+
+        } catch (IOException e) {
+        } finally {
+            if (fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                }
+            }
+
+        }
+
+        return bytesArray;
+
+    }
+    
     private void searchSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchSActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchSActionPerformed
@@ -571,17 +647,10 @@ public class Interface extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

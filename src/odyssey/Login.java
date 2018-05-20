@@ -1,8 +1,6 @@
 package odyssey;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -15,16 +13,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-
-
 
 /**
  * @author josek
@@ -178,19 +166,14 @@ public final class Login extends javax.swing.JFrame {
             System.out.println("Username>>>> "+userN);  
             System.out.println("Password>>>>>"+passW);  
             System.out.println("Acces >>>>>"+acceS);  
-            
-            
-            //JOptionPane.showMessageDialog(this, userN,"Evaluate",2);
-            
+                        
             Interface i = new Interface();
             i.setVisible(true);
             
                        
         }catch(IOException e){
             System.out.println("odyssey.Login.inicio()");
-        } catch (SAXException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParserConfigurationException ex) {
+        } catch (SAXException | ParserConfigurationException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } 
         
@@ -212,76 +195,11 @@ public final class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_SingInActionPerformed
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
-        //super.dispose();
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("C:\\home\\josek\\Descargas"));///home/josek/Descargas
-        fileChooser.setDialogTitle("Select Mp3");
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Mp3 files","mp3"));
-        if(fileChooser.showOpenDialog(Exit)==JFileChooser.APPROVE_OPTION){
-            try {                
-                File myFile = fileChooser.getSelectedFile();
-                String filename = fileChooser.getSelectedFile().getName();
-                String filePath = fileChooser.getSelectedFile().getPath();
-                
-                System.out.println(filename);
-                System.out.println(filePath);
-                //try {
-                String absolutePath = myFile.getAbsolutePath();
-                String filePath1 = absolutePath.substring(0,absolutePath.lastIndexOf(File.separator));
-                System.out.println(filePath1);
-                // convert file to byte[]
-                byte[] bFile = readBytesFromFile(filePath1+filePath);
-                
-                // save byte[] into a file
-                Path path = Paths.get("C:\\home\\josek\\test2.txt");
-                Files.write(path, bFile);
-                
-                System.out.println("Done");
-                
-                //Print bytes[]
-                for (int i = 0; i < bFile.length; i++) {
-                    System.out.print((char) bFile[i]);
-                }
-                
-                //} catch (IOException e) {
-                //    e.printStackTrace();
-                //}
-            } catch (IOException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }        
+        super.dispose();
+        
     }//GEN-LAST:event_ExitActionPerformed
 
-    private static byte[] readBytesFromFile(String filePath) {
-
-        FileInputStream fileInputStream = null;
-        byte[] bytesArray = null;
-
-        try {
-
-            File file = new File(filePath);
-            bytesArray = new byte[(int) file.length()];
-
-            //read file into bytes[]
-            fileInputStream = new FileInputStream(file);
-            fileInputStream.read(bytesArray);
-
-        } catch (IOException e) {
-        } finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (IOException e) {
-                }
-            }
-
-        }
-
-        return bytesArray;
-
-    }
+    
 
        
     /**
